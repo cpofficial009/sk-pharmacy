@@ -1,0 +1,201 @@
+================================================================================
+                    SK PHARMACY - MERN STACK PROJECT SETUP GUIDE
+                  Complete Step-by-Step Installation & Run Guide
+================================================================================
+
+PROJECT OVERVIEW:
+  - Frontend: React.js (Vite), React Router, Axios, Lucide Icons, CSS3
+  - Backend:  Node.js, Express.js (REST API, JWT Authentication, bcrypt)
+  - Database: MongoDB Local (Mongoose ODM) + MongoDB Compass
+  - Ports:    Frontend: http://localhost:3000
+              Backend API: http://localhost:5000
+
+================================================================================
+PART 0: PRE-TRANSFER CHECKLIST (BEFORE COPYING TO FRIEND'S LAPTOP)
+================================================================================
+
+1. DO NOT COPY "node_modules":
+   Before copying the project to a USB pen drive or creating a ZIP file, delete:
+     - "sk pharmacy/server/node_modules"
+     - "sk pharmacy/client/node_modules"
+   (Why? "node_modules" contains over 40,000 tiny files that take 20+ minutes 
+   to copy and can corrupt. Running "npm install" on your friend's laptop will 
+   cleanly recreate them in 1-2 minutes).
+
+2. MAKE SURE "server/.env" IS INCLUDED:
+   Windows Explorer sometimes hides files starting with a dot (.).
+   Ensure "server/.env" is present with these lines:
+     PORT=5000
+     MONGO_URI=mongodb://127.0.0.1:27017/sk_pharmacy
+     JWT_SECRET=sk_pharmacy_jwt_secret_key_2026_super_secure
+     NODE_ENV=development
+
+================================================================================
+STEP 1: INSTALL REQUIRED SOFTWARE ON FRIEND'S LAPTOP (PREREQUISITES)
+================================================================================
+
+Install these 3 free software tools if not already installed:
+
+1. NODE.JS (LTS Version):
+   - Website: https://nodejs.org
+   - Download the LTS (Long Term Support) installer (v20 or v22).
+   - Run the installer and click "Next" with default settings.
+   - Verify in Command Prompt / Terminal:
+       node -v
+       npm -v
+
+2. MONGODB COMMUNITY SERVER & MONGODB COMPASS:
+   - Website: https://www.mongodb.com/try/download/community
+   - Download the Windows MSI installer.
+   - During installation:
+     [X] Make sure "Install MongoDB as a Service" is CHECKED.
+     [X] Make sure "Install MongoDB Compass" is CHECKED.
+   - Finish the installation.
+
+3. VS CODE (RECOMMENDED CODE EDITOR):
+   - Website: https://code.visualstudio.com
+   - Install VS Code to easily open terminals and view code.
+
+================================================================================
+STEP 2: VERIFY LOCAL MONGODB DATABASE
+================================================================================
+
+1. Open "MongoDB Compass" application on the laptop.
+2. The connection string will show:
+     mongodb://localhost:27017
+     (or mongodb://127.0.0.1:27017)
+3. Click the green "Connect" button.
+4. If it connects, MongoDB is running successfully!
+   (You do NOT need to create any database or tables manually; our seeder script 
+   in Step 4 will create the "sk_pharmacy" database and import all data automatically).
+
+================================================================================
+STEP 3: BACKEND SETUP & SEEDING (SERVER)
+================================================================================
+
+1. Open the "sk pharmacy" project folder in VS Code.
+2. Open a Terminal (Terminal -> New Terminal).
+3. Navigate into the "server" directory:
+     cd server
+
+4. Install backend dependencies:
+     npm install
+
+5. Seed the initial database (Categories, Medicines, Orders, Admin User):
+     npm run seed
+
+   You should see:
+   ------------------------------------------------------------
+   MongoDB Connected: 127.0.0.1
+   Database cleared successfully!
+   Users seeded:
+     Admin:    admin@skpharmacy.com  /  admin123
+     Customer: user@skpharmacy.com   /  user123
+   Seeded 8 categories.
+   Seeded 25 medicines/products.
+   Demo data successfully imported into MongoDB!
+   ------------------------------------------------------------
+
+6. Start the Backend API Server:
+     npm run dev
+     (or: npm start)
+
+   You should see:
+   ------------------------------------------------------------
+   MongoDB Connected: 127.0.0.1
+   SK Pharmacy API Server running in development mode on port 5000
+   ------------------------------------------------------------
+   *** KEEP THIS TERMINAL RUNNING! ***
+
+================================================================================
+STEP 4: FRONTEND SETUP & RUNNING (CLIENT)
+================================================================================
+
+1. Open a SECOND Terminal window in VS Code:
+   (Click the "+" icon in the VS Code terminal panel or Terminal -> New Terminal).
+
+2. Navigate into the "client" directory:
+     cd client
+
+3. Install frontend dependencies:
+     npm install
+
+4. Start the Frontend Development Server:
+     npm run dev
+
+   You should see:
+   ------------------------------------------------------------
+   VITE v5.4.3  ready in 300 ms
+
+   ➜  Local:   http://localhost:3000/
+   ➜  Network: use --host to expose
+   ------------------------------------------------------------
+   *** KEEP THIS TERMINAL RUNNING AS WELL! ***
+
+================================================================================
+STEP 5: OPEN AND TEST THE APPLICATION IN BROWSER
+================================================================================
+
+Open Google Chrome or any web browser and go to:
+  http://localhost:3000
+
+LOGIN CREDENTIALS:
+
+1. ADMIN ACCOUNT:
+   - Email:    admin@skpharmacy.com
+   - Password: admin123
+   - Access:   Click "Admin Panel" in the header or visit http://localhost:3000/admin
+               - View Dashboard Analytics & Revenue
+               - Add / Edit / Delete Medicines
+               - Manage Low Stock & Inventory
+               - Manage Customer Orders & Status
+               - Manage Categories & User Roles
+
+2. CUSTOMER / PATIENT ACCOUNT:
+   - Email:    user@skpharmacy.com
+   - Password: user123
+   - Access:   Browse medicines, filter categories, search, add to cart,
+               checkout with address, place orders, view order tracking.
+
+3. NEW USER REGISTRATION:
+   - Anyone can register a new customer account directly from the website!
+
+================================================================================
+STEP 6: QUICK SHORTCUT TO RUN THE PROJECT LATER
+================================================================================
+
+Every time you want to start the project later, simply open two terminals 
+in the root "sk pharmacy" folder:
+
+  Terminal 1:  npm run server
+  Terminal 2:  npm run client
+
+The website will be live at http://localhost:3000!
+
+================================================================================
+TROUBLESHOOTING & COMMON ISSUES:
+================================================================================
+
+Issue 1: "connect ECONNREFUSED 127.0.0.1:27017"
+Solution: MongoDB service is not started on Windows.
+          Press Windows Key + R, type "services.msc", find "MongoDB Server", 
+          right-click and select "Start".
+
+Issue 2: "Port 5000 or 3000 already in use"
+Solution: A previous node process is still active.
+          In PowerShell, run:
+            Stop-Process -Name node -Force
+          Then re-run the start command.
+
+Issue 3: "Cannot find module ..."
+Solution: Dependencies are missing. Run "npm install" inside both "server" 
+          and "client" directories.
+
+Issue 4: No medicines or categories appearing on website
+Solution: In "server" directory, run:
+            npm run seed
+
+================================================================================
+                      PROJECT IS NOW READY TO PRESENT! 🚀
+================================================================================
+
