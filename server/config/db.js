@@ -1,4 +1,14 @@
 const mongoose = require('mongoose');
+const dns = require('dns');
+
+// Ensure reliable DNS resolution for MongoDB Atlas SRV connection strings across platforms
+if (process.env.MONGO_URI && process.env.MONGO_URI.startsWith('mongodb+srv://')) {
+  try {
+    dns.setServers(['8.8.8.8', '1.1.1.1']);
+  } catch (err) {
+    // fallback to system DNS if restricted
+  }
+}
 
 const connectDB = async () => {
   try {

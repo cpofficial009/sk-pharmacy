@@ -9,6 +9,13 @@ const Order = require('../models/Order');
 
 dotenv.config({ path: require('path').resolve(__dirname, '../.env') });
 
+const dns = require('dns');
+if (process.env.MONGO_URI && process.env.MONGO_URI.startsWith('mongodb+srv://')) {
+  try {
+    dns.setServers(['8.8.8.8', '1.1.1.1']);
+  } catch (err) {}
+}
+
 const categoriesData = [
   {
     name: 'Pain Relief',
