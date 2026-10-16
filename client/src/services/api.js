@@ -28,10 +28,13 @@ api.interceptors.request.use(
   }
 );
 
-// Response interceptor: Extract message nicely
+// Response interceptor: Extract message nicely and handle expired/invalid tokens
 api.interceptors.response.use(
   (response) => response,
   (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('userInfo');
+    }
     const message =
       error.response?.data?.message ||
       error.response?.statusText ||
